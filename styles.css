@@ -3,7 +3,7 @@
   font-style: normal;
   font-weight: 400;
   src: local("Horizon"),
-       url("./public/assets/Horizon-PersonalUse.woff") format("woff"),
+       url("./assets/Horizon-PersonalUse.woff") format("woff"),
        url("https://fonts.cdnfonts.com/s/19372/Horizon-PersonalUse.woff") format("woff");
 }
 
