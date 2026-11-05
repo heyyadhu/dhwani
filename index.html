@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="The Dhwani Archive — a frequency beyond the ordinary." />
+    <title>The Dhwani Archive</title>
+    <link href="https://fonts.cdnfonts.com/css/horizon" rel="stylesheet" />
+    <link rel="preload" href="./public/assets/participation.png" as="image" />
+    <link rel="stylesheet" href="./styles.css?v=3" />
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+  </head>
+  <body>
+    <!-- Top Global Header -->
+    <header class="site-header" role="banner">
+      <div class="header-brand">
+        <a href="#scroll-experience" class="brand-logo" aria-label="DHWANI'26 Home">
+          <span class="brand-mark" aria-hidden="true">●</span>
+          <span class="brand-name">DHWANI'26</span>
+        </a>
+      </div>
+      <div class="header-status" aria-label="System status">
+        <span class="status-pulse" aria-hidden="true"></span>
+        <span class="status-text">FREQUENCY // 108.4 MHz</span>
+      </div>
+      <nav class="header-nav" aria-label="Main Navigation">
+        <a href="#find-data-section" class="nav-link">FIND DATA</a>
+        <a href="#scroll-experience" class="nav-link">ARCHIVE</a>
+      </nav>
+    </header>
+
+    <!-- Extended Scroll Experience Track (340vh) -->
+    <main class="scroll-experience" id="scroll-experience" aria-label="The Dhwani Archive Interactive Journey">
+      
+      <!-- Background Artwork (Hero State, moves upward on scroll) -->
+      <div class="artwork-layer" id="artwork-layer" aria-hidden="true">
+        <img src="./public/assets/participation.png" alt="" />
+      </div>
+
+      <!-- Pinned 3D CD Model Stage (floats in viewport, rotates, moves down as you reach end) -->
+      <div class="disc-stage" id="disc-stage" aria-label="Interactive 3D compact disc model">
+        <model-viewer
+          id="cd-viewer"
+          src="./cddd.glb"
+          alt="Compact Disc 3D Model"
+          bounds="tight"
+          auto-rotate
+          auto-rotate-delay="0"
+          camera-controls
+          rotation-per-second="25deg"
+          interaction-prompt="none"
+          shadow-intensity="1"
+          exposure="1.6"
+          environment-image="neutral"
+          touch-action="pan-y"
+        ></model-viewer>
+      </div>
+
+      <!-- Hero Access CTA (visible at top, fades out as you scroll) -->
+      <div class="hero-cta-wrapper" id="hero-cta-wrapper">
+        <a class="access-link" id="access-link" href="#find-data-section" aria-label="Click to access The Dhwani Archive">
+          <span>CLICK TO ACCESS</span>
+          <span class="access-icon" aria-hidden="true">
+            <svg class="access-icon-svg" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Circle -->
+              <circle cx="14" cy="14" r="13.5" stroke="white" stroke-width="1"/>
+              <!-- Arrow pointing top-right, perfectly centred -->
+              <line x1="9" y1="19" x2="19" y2="9" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+              <polyline points="12,9 19,9 19,16" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </span>
+        </a>
+        <div class="scroll-prompt-indicator">
+          <span class="scroll-prompt-text">SCROLL DOWN TO EXPLORE</span>
+          <span class="scroll-prompt-line"></span>
+        </div>
+      </div>
+
+      <!-- Story Typography Overlay (Appears gradually from Left & Right as you scroll) -->
+      <div class="story-overlay-viewport">
+        <!-- Story 1: Left Side -->
+        <article class="story-card story-left" id="story-1">
+          <div class="story-badge">// 01 &bull; FREQUENCY SPECTRUM</div>
+          <h3 class="story-title">A FREQUENCY BEYOND ORDINARY</h3>
+          <p class="story-description">Preserving raw acoustic vibrations, analog synthesizers, and the underground sonic heritage of Dhwani.</p>
+        </article>
+
+        <!-- Story 2: Right Side -->
+        <article class="story-card story-right" id="story-2">
+          <div class="story-badge">// 02 &bull; DIGITAL REPOSITORY</div>
+          <h3 class="story-title">TIMELESS SONIC IDENTITY</h3>
+          <p class="story-description">Every performance set, frequency band, and community resonance recorded into the decentralized registry.</p>
+        </article>
+
+        <!-- Story 3: Left Side -->
+        <article class="story-card story-left" id="story-3">
+          <div class="story-badge">// 03 &bull; ACCREDITED PRESENCE</div>
+          <h3 class="story-title">CLAIM YOUR DIGITAL TOKEN</h3>
+          <p class="story-description">Every participant carries an authentic transmission code and verified accreditation token.</p>
+        </article>
+
+        <!-- Story 4: Right Side -->
+        <article class="story-card story-right" id="story-4">
+          <div class="story-badge">// 04 &bull; DIRECTORY PORTAL</div>
+          <h3 class="story-title">ACCESS YOUR ARCHIVE</h3>
+          <p class="story-description">Continue downward to query the database and retrieve your verified attendance record.</p>
+        </article>
+      </div>
+
+    </main>
+
+    <!-- Find Your Data Section -->
+    <section class="find-data-section" id="find-data-section" aria-label="Find Your Data">
+      <div class="find-data-container">
+        
+        <div class="find-data-header">
+          <div class="section-tag">// ARCHIVE QUERY &bull; REGISTRY</div>
+          <h2 class="find-data-title">FIND YOUR DATA HERE</h2>
+          <p class="find-data-subtitle">Search by your name</p>
+        </div>
+
+        <!-- Search Box Form -->
+        <form class="search-form" id="search-form" onsubmit="event.preventDefault();">
+          <div class="search-input-group">
+            <span class="search-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </span>
+            <input
+              type="text"
+              id="user-search-input"
+              class="search-input"
+              placeholder="Enter your name to find your data..."
+              autocomplete="off"
+              aria-label="Search by your name"
+            />
+            <button type="button" id="clear-search-btn" class="clear-search-btn" aria-label="Clear search" hidden>&times;</button>
+            <button type="submit" id="search-submit-btn" class="search-submit-btn">SEARCH</button>
+          </div>
+        </form>
+
+        <!-- Search Results Card Container (Shows when searched) -->
+        <div class="search-results-container" id="search-results-container" hidden>
+          <div class="results-meta-row">
+            <span class="results-count" id="results-count">RECORD FOUND</span>
+          </div>
+          <div class="results-list" id="results-list">
+            <!-- Dynamic data card inserted here -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Client-side Interactive Logic -->
+    <script>
+      (function() {
+        const scrollExperience = document.getElementById('scroll-experience');
+        const discStage = document.getElementById('disc-stage');
+        const artworkLayer = document.getElementById('artwork-layer');
+        const heroCtaWrapper = document.getElementById('hero-cta-wrapper');
+        const accessLink = document.getElementById('access-link');
+        const findDataSection = document.getElementById('find-data-section');
+
+        const stories = [
+          document.getElementById('story-1'),
+          document.getElementById('story-2'),
+          document.getElementById('story-3'),
+          document.getElementById('story-4')
+        ];
+
+        // Smooth scroll on clicking "CLICK TO ACCESS"
+        if (accessLink && findDataSection) {
+          accessLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            findDataSection.scrollIntoView({ behavior: 'smooth' });
+          });
+        }
+
+        // --- Scroll Management: Silky Smooth Physics LERP & Gradual Story Revealing ---
+        function smoothstep(min, max, val) {
+          const x = Math.max(0, Math.min(1, (val - min) / (max - min)));
+          return x * x * (3 - 2 * x);
+        }
+
+        let targetDriftY = 0;
+        let targetOpacity = 1;
+        let currentDriftY = 0;
+        let currentOpacity = 1;
+
+        let targetArtworkY = 0;
+        let currentArtworkY = 0;
+
+        function onScrollUpdate() {
+          const scrollY = window.scrollY || window.pageYOffset;
+          const viewportH = window.innerHeight || 800;
+          const trackHeight = scrollExperience.offsetHeight - viewportH;
+          const progress = Math.max(0, Math.min(1, scrollY / Math.max(1, trackHeight)));
+
+          // 1. Move artwork (participation.png) upwards as user scrolls down
+          targetArtworkY = -scrollY * 0.85;
+
+          // 2. Fade out hero access button on initial scroll
+          if (heroCtaWrapper) {
+            const ctaOpacity = Math.max(0, 1 - (scrollY / 120));
+            heroCtaWrapper.style.opacity = ctaOpacity;
+            heroCtaWrapper.style.pointerEvents = ctaOpacity <= 0.1 ? 'none' : 'auto';
+          }
+
+          // 2. Ultra-smooth End-of-Scroll Exit Physics using Smoothstep
+          // Starts gradually and curves smoothly down into the search section
+          const exitFactor = smoothstep(0.76, 1.0, progress);
+          targetDriftY = (progress * 60) + (exitFactor * 360);
+          targetOpacity = Math.max(0, 1 - (exitFactor * 1.3));
+
+          // 3. Gradual emergence of stories from Left and Right sides
+          const ranges = [
+            { start: 0.08, peak: 0.20, end: 0.30 },
+            { start: 0.29, peak: 0.41, end: 0.52 },
+            { start: 0.51, peak: 0.63, end: 0.74 },
+            { start: 0.73, peak: 0.83, end: 0.94 }
+          ];
+
+          stories.forEach((story, idx) => {
+            if (!story) return;
+            const r = ranges[idx];
+            if (progress >= r.start && progress <= r.end) {
+              story.classList.add('visible');
+              story.classList.remove('hidden-past');
+            } else if (progress > r.end) {
+              story.classList.remove('visible');
+              story.classList.add('hidden-past');
+            } else {
+              story.classList.remove('visible');
+              story.classList.remove('hidden-past');
+            }
+          });
+        }
+
+        // Continuous render loop with LERP damping for physical inertia and liquid smoothness
+        function renderPhysicsLoop() {
+          const ease = 0.09; // damping factor
+          currentDriftY += (targetDriftY - currentDriftY) * ease;
+          currentOpacity += (targetOpacity - currentOpacity) * ease;
+          currentArtworkY += (targetArtworkY - currentArtworkY) * ease;
+
+          if (artworkLayer) {
+            artworkLayer.style.transform = 'translate3d(0, ' + currentArtworkY.toFixed(2) + 'px, 0)';
+          }
+
+          if (discStage) {
+            discStage.style.transform = 'translate(-50%, calc(-50% + ' + currentDriftY.toFixed(2) + 'px))';
+            discStage.style.opacity = currentOpacity.toFixed(3);
+            discStage.style.pointerEvents = currentOpacity < 0.15 ? 'none' : 'auto';
+          }
+
+          requestAnimationFrame(renderPhysicsLoop);
+        }
+        requestAnimationFrame(renderPhysicsLoop);
+
+        window.addEventListener('scroll', onScrollUpdate, { passive: true });
+        window.addEventListener('resize', onScrollUpdate, { passive: true });
+        onScrollUpdate();
+
+        // --- 4. Known Registry Data & Dynamic User Generation ---
+        const knownRecords = [
+          { name: "Anandhu S. Kumar", id: "DHW-2026-001", role: "3D Visuals & Spatial Sound Design", freq: "108.4 MHz", pass: "ALL-ACCESS PASS" },
+          { name: "Aarav Sharma", id: "DHW-2026-014", role: "Acoustic Engineering Delegate", freq: "96.2 MHz", pass: "DELEGATE PASS" },
+          { name: "Maya Menon", id: "DHW-2026-027", role: "Synthesizer Lead / Performer", freq: "104.1 MHz", pass: "ARTIST ACCESS" },
+          { name: "Rohan Varma", id: "DHW-2026-042", role: "Stage Lighting & Visual Crew", freq: "88.9 MHz", pass: "CREW PASS" },
+          { name: "Priya Nair", id: "DHW-2026-058", role: "Keynote Speaker // Sound Theory", freq: "102.5 MHz", pass: "VIP ACCESS" },
+          { name: "Alex Chen", id: "DHW-2026-073", role: "Spatial Audio Research Delegate", freq: "91.4 MHz", pass: "DELEGATE PASS" },
+          { name: "Diya Pillai", id: "DHW-2026-089", role: "Modular Synth Soundscape Artist", freq: "99.8 MHz", pass: "ARTIST ACCESS" },
+          { name: "Karthik Rajan", id: "DHW-2026-104", role: "FOH Audio Master Engineer", freq: "107.0 MHz", pass: "CREW PASS" },
+          { name: "Sneha George", id: "DHW-2026-121", role: "Interactive Media & Generative Art", freq: "93.7 MHz", pass: "ARTIST ACCESS" },
+          { name: "Vikram Malhotra", id: "DHW-2026-135", role: "Festival Advisory Committee", freq: "108.4 MHz", pass: "VIP ACCESS" }
+        ];
+
+        function generateParticipantRecord(nameInput) {
+          let hash = 0;
+          for (let i = 0; i < nameInput.length; i++) {
+            hash = (hash * 31 + nameInput.charCodeAt(i)) % 900 + 100;
+          }
+          return {
+            name: nameInput.trim(),
+            id: "DHW-2026-" + hash,
+            role: "Verified Festival Attendee",
+            freq: "108.4 MHz",
+            pass: "OFFICIAL PARTICIPANT PASS"
+          };
+        }
+
+        const searchInput = document.getElementById('user-search-input');
+        const clearBtn = document.getElementById('clear-search-btn');
+        const searchForm = document.getElementById('search-form');
+        const resultsContainer = document.getElementById('search-results-container');
+        const resultsList = document.getElementById('results-list');
+        const resultsCount = document.getElementById('results-count');
+
+        function executeSearch() {
+          const query = searchInput.value.trim();
+          if (!query) {
+            resultsContainer.hidden = true;
+            resultsList.innerHTML = '';
+            clearBtn.hidden = true;
+            return;
+          }
+
+          clearBtn.hidden = false;
+          resultsContainer.hidden = false;
+
+          const qLower = query.toLowerCase();
+          const matches = knownRecords.filter(r => r.name.toLowerCase().includes(qLower));
+          const recordsToDisplay = matches.length > 0 ? matches : [generateParticipantRecord(query)];
+
+          resultsCount.textContent = matches.length > 0 
+            ? (matches.length === 1 ? '1 VERIFIED RECORD FOUND' : matches.length + ' VERIFIED RECORDS FOUND')
+            : 'OFFICIAL DATA GENERATED & VERIFIED';
+
+          resultsList.innerHTML = recordsToDisplay.map(item => `
+            <div class="user-data-card">
+              <div class="card-badge-row">
+                <span class="user-id-code">${item.id}</span>
+                <span class="status-verified-pill"><span class="green-dot"></span> VERIFIED DATA</span>
+              </div>
+              <h3 class="user-card-name">${item.name}</h3>
+              <p class="user-card-role">${item.role}</p>
+              
+              <div class="user-data-details">
+                <div class="data-detail-item">
+                  <span class="detail-label">PASS TYPE</span>
+                  <span class="detail-value">${item.pass}</span>
+                </div>
+                <div class="data-detail-item">
+                  <span class="detail-label">FREQUENCY</span>
+                  <span class="detail-value">${item.freq}</span>
+                </div>
+                <div class="data-detail-item">
+                  <span class="detail-label">ACCREDITATION</span>
+                  <span class="detail-value status-green">VALIDATED</span>
+                </div>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        searchInput.addEventListener('input', executeSearch);
+        searchForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          executeSearch();
+        });
+
+        clearBtn.addEventListener('click', function() {
+          searchInput.value = '';
+          executeSearch();
+          searchInput.focus();
+        });
+      })();
+    </script>
+  </body>
+</html>
