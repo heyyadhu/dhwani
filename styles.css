@@ -410,7 +410,7 @@ body {
 }
 
 
-/* Story 1 Hand Art Card */
+/* Story Art Cards (Hand Visuals 1 & 2) */
 .story-art-card {
   background: transparent;
   border: none !important;
@@ -418,7 +418,6 @@ body {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   padding: 0;
-  left: 0 !important;
   width: clamp(380px, 54vw, 780px);
   max-width: none;
   pointer-events: none;
@@ -426,6 +425,7 @@ body {
 
 .story-art-card.story-left {
   left: 0 !important;
+  right: auto !important;
   transform: translateX(-15%);
 }
 
@@ -434,6 +434,20 @@ body {
 }
 
 .story-art-card.story-left.hidden-past {
+  transform: translateY(-24px);
+}
+
+.story-art-card.story-right {
+  right: 0 !important;
+  left: auto !important;
+  transform: translateX(15%);
+}
+
+.story-art-card.story-right.visible {
+  transform: translateX(0);
+}
+
+.story-art-card.story-right.hidden-past {
   transform: translateY(-24px);
 }
 
@@ -528,8 +542,8 @@ body {
     font-size: 11.5px;
   }
 
-  /* Story 1 Hand Art on Mobile */
-  .story-card.story-art-card {
+  /* Story Art Cards on Mobile */
+  .story-card.story-art-card.story-left {
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
@@ -543,7 +557,25 @@ body {
     transform: translateY(40px);
   }
 
-  .story-card.story-art-card.visible {
+  .story-card.story-art-card.story-left.visible {
+    transform: translateY(0);
+  }
+
+  .story-card.story-art-card.story-right {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 0 !important;
+    width: min(92vw, 460px) !important;
+    left: auto !important;
+    right: 0 !important;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 24px) !important;
+    transform: translateY(40px);
+  }
+
+  .story-card.story-art-card.story-right.visible {
     transform: translateY(0);
   }
 
