@@ -202,6 +202,7 @@ body {
   will-change: transform;
 }
 
+.artwork-layer picture,
 .artwork-layer img {
   display: block;
   width: 100%;
@@ -461,21 +462,22 @@ body {
   user-select: none;
 }
 
-/* Tablet & Mobile Layout for Scroll Journey */
+/* Tablet & Mobile Layout for Scroll Journey (Optimized with phonesc.png) */
 @media (max-width: 768px), (max-aspect-ratio: 4 / 5) {
   .header-status {
     display: none;
   }
 
   .site-header {
-    padding-top: calc(env(safe-area-inset-top, 0px) + 14px);
+    padding-top: calc(env(safe-area-inset-top, 0px) + 12px);
     padding-right: calc(env(safe-area-inset-right, 0px) + 16px);
-    padding-bottom: 12px;
+    padding-bottom: 10px;
     padding-left: calc(env(safe-area-inset-left, 0px) + 16px);
   }
 
   .brand-name {
     font-size: 14px;
+    letter-spacing: 0.06em;
   }
 
   .header-nav {
@@ -483,46 +485,63 @@ body {
     font-size: 11px;
   }
 
+  /* Mobile Background Artwork (phonesc.png) */
   .artwork-layer {
-    top: 5%;
-    left: -15%;
-    width: 130%;
-    height: 75%;
-  }
-
-  .artwork-layer img {
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
-    object-fit: contain;
+    overflow: hidden;
   }
 
+  .artwork-layer picture,
+  .artwork-layer img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  /* Disc Stage: Centered inside phonesc.png circular frame */
   .disc-stage {
-    top: 45%;
-    width: min(84vw, 42vh, 380px);
+    top: 48.3%;
+    left: 50%;
+    width: min(78vw, 38vh, 320px);
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
   }
 
   .hero-cta-wrapper {
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 22px);
+    z-index: 5;
   }
 
-  /* Story Cards on Mobile: Centered gracefully over bottom safe area */
+  .access-link {
+    min-height: 40px;
+    padding: 8px 18px;
+    font-size: 11px;
+  }
+
+  /* Story Text Cards on Mobile (Stories 3 & 4) */
   .story-card {
     max-width: none;
-    width: calc(100vw - 36px);
-    left: 18px !important;
-    right: 18px !important;
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 26px);
-    padding: 16px 20px;
+    width: calc(100vw - 32px);
+    left: 16px !important;
+    right: 16px !important;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
+    padding: 16px 18px;
     text-align: center !important;
     border: 1px solid rgba(225, 11, 11, 0.4) !important;
     border-top: 2px solid #e10b0b !important;
   }
 
   .story-left {
-    transform: translateY(40px);
+    transform: translateY(30px);
   }
 
   .story-right {
-    transform: translateY(40px);
+    transform: translateY(30px);
   }
 
   .story-card.visible {
@@ -534,7 +553,7 @@ body {
   }
 
   .story-title {
-    font-size: 15px;
+    font-size: 14.5px;
     margin-bottom: 6px;
   }
 
@@ -542,7 +561,7 @@ body {
     font-size: 11.5px;
   }
 
-  /* Story Art Cards on Mobile */
+  /* Story Art Cards (Hands 1 & 2) on Mobile: Slide horizontally beside the 3D CD */
   .story-card.story-art-card.story-left {
     background: transparent !important;
     border: none !important;
@@ -550,15 +569,20 @@ body {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     padding: 0 !important;
-    width: min(92vw, 460px) !important;
+    width: min(85vw, 380px) !important;
     left: 0 !important;
     right: auto !important;
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 24px) !important;
-    transform: translateY(40px);
+    top: 48.3% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) translateX(-22%);
   }
 
   .story-card.story-art-card.story-left.visible {
-    transform: translateY(0);
+    transform: translateY(-50%) translateX(0);
+  }
+
+  .story-card.story-art-card.story-left.hidden-past {
+    transform: translateY(-50%) translateY(-20px);
   }
 
   .story-card.story-art-card.story-right {
@@ -568,15 +592,20 @@ body {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     padding: 0 !important;
-    width: min(92vw, 460px) !important;
+    width: min(85vw, 380px) !important;
     left: auto !important;
     right: 0 !important;
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 24px) !important;
-    transform: translateY(40px);
+    top: 48.3% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) translateX(22%);
   }
 
   .story-card.story-art-card.story-right.visible {
-    transform: translateY(0);
+    transform: translateY(-50%) translateX(0);
+  }
+
+  .story-card.story-art-card.story-right.hidden-past {
+    transform: translateY(-50%) translateY(-20px);
   }
 
 }
@@ -584,7 +613,7 @@ body {
 /* Compact Mobile (under 420px) */
 @media (max-width: 420px) {
   .site-header {
-    padding-top: calc(env(safe-area-inset-top, 0px) + 12px);
+    padding-top: calc(env(safe-area-inset-top, 0px) + 10px);
     padding-right: calc(env(safe-area-inset-right, 0px) + 12px);
     padding-left: calc(env(safe-area-inset-left, 0px) + 12px);
   }
@@ -600,15 +629,20 @@ body {
   }
 
   .disc-stage {
-    top: 44%;
-    width: min(88vw, 38vh, 320px);
+    top: 48.3%;
+    width: min(76vw, 36vh, 290px);
   }
 
-  .story-card {
-    width: calc(100vw - 28px);
-    left: 14px !important;
-    right: 14px !important;
-    padding: 14px 16px;
+  .story-card:not(.story-art-card) {
+    width: calc(100vw - 24px);
+    left: 12px !important;
+    right: 12px !important;
+    padding: 13px 15px;
+  }
+
+  .story-card.story-art-card.story-left,
+  .story-card.story-art-card.story-right {
+    width: min(88vw, 340px) !important;
   }
 }
 

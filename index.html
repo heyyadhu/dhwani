@@ -7,10 +7,11 @@
     <meta name="description" content="The Dhwani Archive — a frequency beyond the ordinary." />
     <title>The Dhwani Archive</title>
     <link href="https://fonts.cdnfonts.com/css/horizon" rel="stylesheet" />
-    <link rel="preload" href="./assets/participation.png" as="image" />
+    <link rel="preload" href="./assets/participation.png" as="image" media="(min-width: 769px)" />
+    <link rel="preload" href="./assets/phonesc.png" as="image" media="(max-width: 768px)" />
     <link rel="preload" href="./assets/hand1.png" as="image" />
     <link rel="preload" href="./assets/hand2.png" as="image" />
-    <link rel="stylesheet" href="./styles.css?v=6" />
+    <link rel="stylesheet" href="./styles.css?v=8" />
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   </head>
   <body>
@@ -37,7 +38,10 @@
       
       <!-- Background Artwork (Hero State, moves upward on scroll) -->
       <div class="artwork-layer" id="artwork-layer" aria-hidden="true">
-        <img src="./assets/participation.png" alt="" />
+        <picture>
+          <source media="(max-width: 768px)" srcset="./assets/phonesc.png" />
+          <img src="./assets/participation.png" alt="Dhwani Visual Archive" id="artwork-img" />
+        </picture>
       </div>
 
       <!-- Pinned 3D CD Model Stage (floats in viewport, rotates, moves down as you reach end) -->
@@ -199,7 +203,12 @@
           const progress = Math.max(0, Math.min(1, scrollY / Math.max(1, trackHeight)));
 
           // 1. Move artwork (participation.png) upwards as user scrolls down
-          targetArtworkY = -scrollY * 0.85;
+          // On mobile, phonesc.png is full-cover fixed -- skip parallax
+          if (window.innerWidth > 768) {
+            targetArtworkY = -scrollY * 0.85;
+          } else {
+            targetArtworkY = 0;
+          }
 
           // 2. Fade out hero access button on initial scroll
           if (heroCtaWrapper) {
