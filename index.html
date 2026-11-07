@@ -10,7 +10,7 @@
     <link rel="preload" href="./assets/participation.png" as="image" media="(min-width: 769px)" />
     <link rel="preload" href="./assets/hand1.png" as="image" />
     <link rel="preload" href="./assets/hand2.png" as="image" />
-    <link rel="stylesheet" href="./styles.css?v=13" />
+    <link rel="stylesheet" href="./styles.css?v=14" />
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   </head>
   <body>
@@ -221,17 +221,18 @@
             heroCtaWrapper.style.pointerEvents = ctaOpacity <= 0.1 ? 'none' : 'auto';
           }
 
-          // 2. End-of-Scroll Exit Physics: Extended, luxurious lingering presence
-          // Disc stays fully visible through all stories, and softly glides/fades only at the very finish (0.92 -> 1.0)
-          const exitFactor = smoothstep(0.92, 1.0, progress);
-          targetDriftY = (progress * 60) + (exitFactor * 160);
+          // 2. End-of-Scroll & Reverse-Scroll Exit/Enter Physics: Extended, luxurious lingering presence
+          // Disc stays fully visible through all stories, and softly glides/fades over an extended window (0.85 <-> 1.0)
+          // Operates symmetrically both forward (fading out) and reverse scrolling (smoothly fading back in)
+          const exitFactor = smoothstep(0.85, 1.0, progress);
+          targetDriftY = (progress * 50) + (exitFactor * 140);
           targetOpacity = Math.max(0, 1 - exitFactor);
 
-          // Only begin guiding fade-out once the search registry section is well inside the viewport (top 30%)
+          // Guide fade transition relative to search registry section boundary
           if (findDataSection) {
             const findRect = findDataSection.getBoundingClientRect();
-            if (findRect.top < viewportH * 0.3) {
-              const overlap = Math.max(0, Math.min(1, (viewportH * 0.3 - findRect.top) / (viewportH * 0.3)));
+            if (findRect.top < viewportH * 0.45) {
+              const overlap = Math.max(0, Math.min(1, (viewportH * 0.45 - findRect.top) / (viewportH * 0.45)));
               targetOpacity = Math.min(targetOpacity, Math.max(0, 1 - overlap));
             }
           }
@@ -264,7 +265,10 @@
         function renderPhysicsLoop() {
           const ease = 0.09; // damping factor
           currentDriftY += (targetDriftY - currentDriftY) * ease;
-          currentOpacity += (targetOpacity - currentOpacity) * 0.035;
+          // Responsive ease: 0.055 when fading back in (reverse scrolling) so disc re-emerges promptly,
+          // and 0.035 when fading out (forward scrolling) so it lingers softly
+          const opacityEase = targetOpacity > currentOpacity ? 0.055 : 0.035;
+          currentOpacity += (targetOpacity - currentOpacity) * opacityEase;
           if (targetOpacity === 0 && currentOpacity < 0.005) {
             currentOpacity = 0;
           } else if (targetOpacity === 1 && currentOpacity > 0.995) {
