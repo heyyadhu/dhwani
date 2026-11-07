@@ -224,7 +224,6 @@ body {
   pointer-events: auto;
   will-change: transform, opacity;
   opacity: 1;
-  transition: opacity 120ms ease-out;
 }
 
 .disc-stage model-viewer {
@@ -234,7 +233,6 @@ body {
   background: transparent;
   --poster-color: transparent;
   will-change: opacity;
-  transition: opacity 120ms ease-out;
 }
 
 /* Hero Access CTA & Scroll Hint */

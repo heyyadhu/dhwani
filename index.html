@@ -10,7 +10,7 @@
     <link rel="preload" href="./assets/participation.png" as="image" media="(min-width: 769px)" />
     <link rel="preload" href="./assets/hand1.png" as="image" />
     <link rel="preload" href="./assets/hand2.png" as="image" />
-    <link rel="stylesheet" href="./styles.css?v=11" />
+    <link rel="stylesheet" href="./styles.css?v=12" />
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   </head>
   <body>
@@ -221,17 +221,17 @@
             heroCtaWrapper.style.pointerEvents = ctaOpacity <= 0.1 ? 'none' : 'auto';
           }
 
-          // 2. End-of-Scroll Exit Physics: Smooth, decisive fade-out after story journey
-          // Starts as story 4 concludes and fades completely out into the search registry
-          const exitFactor = smoothstep(0.80, 0.93, progress);
-          targetDriftY = (progress * 60) + (exitFactor * 320);
+          // 2. End-of-Scroll Exit Physics: Gentle, lingering fade-out as you conclude the journey
+          // Begins softly near the very end of story 4 and fades gradually
+          const exitFactor = smoothstep(0.88, 1.0, progress);
+          targetDriftY = (progress * 60) + (exitFactor * 180);
           targetOpacity = Math.max(0, 1 - exitFactor);
 
-          // Additional guarantee: If the search registry section enters the viewport, force disc to fade out to 0
+          // Only guide fade-out once the search registry section scrolls past the mid-screen
           if (findDataSection) {
             const findRect = findDataSection.getBoundingClientRect();
-            if (findRect.top < viewportH * 1.1) {
-              const overlap = Math.max(0, Math.min(1, (viewportH * 1.1 - findRect.top) / (viewportH * 0.5)));
+            if (findRect.top < viewportH * 0.5) {
+              const overlap = Math.max(0, Math.min(1, (viewportH * 0.5 - findRect.top) / (viewportH * 0.5)));
               targetOpacity = Math.min(targetOpacity, Math.max(0, 1 - overlap));
             }
           }
@@ -264,10 +264,10 @@
         function renderPhysicsLoop() {
           const ease = 0.09; // damping factor
           currentDriftY += (targetDriftY - currentDriftY) * ease;
-          currentOpacity += (targetOpacity - currentOpacity) * 0.12;
-          if (targetOpacity === 0 && currentOpacity < 0.02) {
+          currentOpacity += (targetOpacity - currentOpacity) * 0.05;
+          if (targetOpacity === 0 && currentOpacity < 0.005) {
             currentOpacity = 0;
-          } else if (targetOpacity === 1 && currentOpacity > 0.98) {
+          } else if (targetOpacity === 1 && currentOpacity > 0.995) {
             currentOpacity = 1;
           }
           currentArtworkY += (targetArtworkY - currentArtworkY) * ease;
