@@ -10,7 +10,7 @@
     <link rel="preload" href="./assets/participation.png" as="image" media="(min-width: 769px)" />
     <link rel="preload" href="./assets/hand1.png" as="image" />
     <link rel="preload" href="./assets/hand2.png" as="image" />
-    <link rel="stylesheet" href="./styles.css?v=17" />
+    <link rel="stylesheet" href="./styles.css?v=18" />
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   </head>
   <body>
@@ -209,10 +209,9 @@
             targetArtworkY = 0;
           }
 
-          // 1b. Smooth, controlled disc rotation: reaches a full, beautiful 360° rotation as stories conclude (0.88),
-          // completely resting still at the end of scrolling (no lingering spin or overrun)
-          const storyProgress = Math.min(1, Math.max(0, progress / 0.88));
-          targetDiscRotation = storyProgress * 360;
+          // 1b. Real-time, zero-delay disc rotation directly mapped to scroll progress (0 - 360deg)
+          // No artificial clamping or dead zones so reverse scrolling begins spinning back instantly
+          targetDiscRotation = progress * 360;
 
           // 2. Fade out hero access button on initial scroll
           if (heroCtaWrapper) {
@@ -221,8 +220,8 @@
             heroCtaWrapper.style.pointerEvents = ctaOpacity <= 0.1 ? 'none' : 'auto';
           }
 
-          // 2b. Subtle natural vertical float for the disc as you scroll (settles cleanly with stories)
-          targetDriftY = storyProgress * 60;
+          // 2b. Subtle natural vertical float for the disc as you scroll
+          targetDriftY = progress * 60;
 
           // 3. Gradual emergence of stories from Left and Right sides
           const ranges = [
@@ -258,11 +257,8 @@
             artworkLayer.style.transform = 'translate3d(0, ' + currentArtworkY.toFixed(2) + 'px, 0)';
           }
 
-          // Responsive, silky smooth scroll-driven rotation: settles cleanly with scroll gesture without run-on lag
-          currentDiscRotation += (targetDiscRotation - currentDiscRotation) * 0.08;
-          if (Math.abs(targetDiscRotation - currentDiscRotation) < 0.04) {
-            currentDiscRotation = targetDiscRotation;
-          }
+          // Zero-delay rotation: tracks scroll in real-time with zero lag or delay on reverse scrolling
+          currentDiscRotation = targetDiscRotation;
           if (cdViewer) {
             cdViewer.setAttribute('camera-orbit', currentDiscRotation.toFixed(2) + 'deg 75deg 105%');
           }
