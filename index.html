@@ -10,7 +10,7 @@
     <link rel="preload" href="./assets/participation.png" as="image" media="(min-width: 769px)" />
     <link rel="preload" href="./assets/hand1.png" as="image" />
     <link rel="preload" href="./assets/hand2.png" as="image" />
-    <link rel="stylesheet" href="./styles.css?v=15" />
+    <link rel="stylesheet" href="./styles.css?v=16" />
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   </head>
   <body>
@@ -185,9 +185,7 @@
         }
 
         let targetDriftY = 0;
-        let targetOpacity = 1;
         let currentDriftY = 0;
-        let currentOpacity = 1;
 
         let targetArtworkY = 0;
         let currentArtworkY = 0;
@@ -221,12 +219,8 @@
             heroCtaWrapper.style.pointerEvents = ctaOpacity <= 0.1 ? 'none' : 'auto';
           }
 
-          // 2. End-of-Scroll & Reverse-Scroll Exit/Enter Physics: Ultra-gradual, slow fade
-          // Spans across a wide 20% scroll distance (0.80 -> 1.0) for a very slow, continuous, gentle dissolve
-          // Works symmetrically forward (fading out slowly) and reverse (fading in slowly)
-          const exitFactor = smoothstep(0.80, 1.0, progress);
-          targetDriftY = (progress * 45) + (exitFactor * 120);
-          targetOpacity = Math.max(0, 1 - exitFactor);
+          // 2. Subtle natural vertical float for the disc as you scroll (no fading)
+          targetDriftY = progress * 60;
 
           // 3. Gradual emergence of stories from Left and Right sides
           const ranges = [
@@ -256,14 +250,6 @@
         function renderPhysicsLoop() {
           const ease = 0.09; // damping factor
           currentDriftY += (targetDriftY - currentDriftY) * ease;
-          // Ultra-slow, liquid-smooth opacity easing: greatly reduced fade speed for a buttery, gradual transition
-          const opacityEase = targetOpacity > currentOpacity ? 0.03 : 0.02;
-          currentOpacity += (targetOpacity - currentOpacity) * opacityEase;
-          if (targetOpacity === 0 && currentOpacity < 0.005) {
-            currentOpacity = 0;
-          } else if (targetOpacity === 1 && currentOpacity > 0.995) {
-            currentOpacity = 1;
-          }
           currentArtworkY += (targetArtworkY - currentArtworkY) * ease;
 
           if (artworkLayer) {
@@ -278,14 +264,6 @@
 
           if (discStage) {
             discStage.style.transform = 'translate(-50%, calc(-50% + ' + currentDriftY.toFixed(2) + 'px))';
-            discStage.style.opacity = currentOpacity.toFixed(3);
-            discStage.style.visibility = currentOpacity <= 0 ? 'hidden' : 'visible';
-            discStage.style.pointerEvents = currentOpacity < 0.15 ? 'none' : 'auto';
-          }
-
-          if (cdViewer) {
-            cdViewer.style.opacity = currentOpacity.toFixed(3);
-            cdViewer.style.visibility = currentOpacity <= 0 ? 'hidden' : 'visible';
           }
 
           requestAnimationFrame(renderPhysicsLoop);
