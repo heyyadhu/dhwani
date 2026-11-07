@@ -157,6 +157,7 @@
       (function() {
         const scrollExperience = document.getElementById('scroll-experience');
         const discStage = document.getElementById('disc-stage');
+        const cdViewer = document.getElementById('cd-viewer');
         const artworkLayer = document.getElementById('artwork-layer');
         const heroCtaWrapper = document.getElementById('hero-cta-wrapper');
         const accessLink = document.getElementById('access-link');
@@ -210,8 +211,8 @@
             targetArtworkY = 0;
           }
 
-          // 1b. Drive disc rotation from scroll progress (0 → 1080 degrees over full scroll)
-          targetDiscRotation = progress * 1080;
+          // 1b. Smooth, controlled disc rotation from scroll progress (1 elegant full rotation over the entire scroll track)
+          targetDiscRotation = progress * 360;
 
           // 2. Fade out hero access button on initial scroll
           if (heroCtaWrapper) {
@@ -261,9 +262,8 @@
             artworkLayer.style.transform = 'translate3d(0, ' + currentArtworkY.toFixed(2) + 'px, 0)';
           }
 
-          // Apply scroll-driven rotation to model-viewer via camera-orbit
-          currentDiscRotation += (targetDiscRotation - currentDiscRotation) * 0.07;
-          const cdViewer = document.getElementById('cd-viewer');
+          // Silky smooth scroll-driven rotation with high-inertia damping
+          currentDiscRotation += (targetDiscRotation - currentDiscRotation) * 0.04;
           if (cdViewer) {
             cdViewer.setAttribute('camera-orbit', currentDiscRotation.toFixed(2) + 'deg 75deg 105%');
           }
