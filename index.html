@@ -10,7 +10,7 @@
     <link rel="preload" href="./assets/participation.png" as="image" media="(min-width: 769px)" />
     <link rel="preload" href="./assets/hand1.png" as="image" />
     <link rel="preload" href="./assets/hand2.png" as="image" />
-    <link rel="stylesheet" href="./styles.css?v=14" />
+    <link rel="stylesheet" href="./styles.css?v=15" />
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   </head>
   <body>
@@ -221,21 +221,12 @@
             heroCtaWrapper.style.pointerEvents = ctaOpacity <= 0.1 ? 'none' : 'auto';
           }
 
-          // 2. End-of-Scroll & Reverse-Scroll Exit/Enter Physics: Extended, luxurious lingering presence
-          // Disc stays fully visible through all stories, and softly glides/fades over an extended window (0.85 <-> 1.0)
-          // Operates symmetrically both forward (fading out) and reverse scrolling (smoothly fading back in)
-          const exitFactor = smoothstep(0.85, 1.0, progress);
-          targetDriftY = (progress * 50) + (exitFactor * 140);
+          // 2. End-of-Scroll & Reverse-Scroll Exit/Enter Physics: Ultra-gradual, slow fade
+          // Spans across a wide 20% scroll distance (0.80 -> 1.0) for a very slow, continuous, gentle dissolve
+          // Works symmetrically forward (fading out slowly) and reverse (fading in slowly)
+          const exitFactor = smoothstep(0.80, 1.0, progress);
+          targetDriftY = (progress * 45) + (exitFactor * 120);
           targetOpacity = Math.max(0, 1 - exitFactor);
-
-          // Guide fade transition relative to search registry section boundary
-          if (findDataSection) {
-            const findRect = findDataSection.getBoundingClientRect();
-            if (findRect.top < viewportH * 0.45) {
-              const overlap = Math.max(0, Math.min(1, (viewportH * 0.45 - findRect.top) / (viewportH * 0.45)));
-              targetOpacity = Math.min(targetOpacity, Math.max(0, 1 - overlap));
-            }
-          }
 
           // 3. Gradual emergence of stories from Left and Right sides
           const ranges = [
@@ -265,9 +256,8 @@
         function renderPhysicsLoop() {
           const ease = 0.09; // damping factor
           currentDriftY += (targetDriftY - currentDriftY) * ease;
-          // Responsive ease: 0.055 when fading back in (reverse scrolling) so disc re-emerges promptly,
-          // and 0.035 when fading out (forward scrolling) so it lingers softly
-          const opacityEase = targetOpacity > currentOpacity ? 0.055 : 0.035;
+          // Ultra-slow, liquid-smooth opacity easing: greatly reduced fade speed for a buttery, gradual transition
+          const opacityEase = targetOpacity > currentOpacity ? 0.03 : 0.02;
           currentOpacity += (targetOpacity - currentOpacity) * opacityEase;
           if (targetOpacity === 0 && currentOpacity < 0.005) {
             currentOpacity = 0;
