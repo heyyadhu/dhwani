@@ -10,7 +10,7 @@
     <link rel="preload" href="./assets/participation.png" as="image" media="(min-width: 769px)" />
     <link rel="preload" href="./assets/hand1.png" as="image" />
     <link rel="preload" href="./assets/hand2.png" as="image" />
-    <link rel="stylesheet" href="./styles.css?v=9" />
+    <link rel="stylesheet" href="./styles.css?v=10" />
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   </head>
   <body>
@@ -47,10 +47,8 @@
           src="./cddd.glb"
           alt="Compact Disc 3D Model"
           bounds="tight"
-          auto-rotate
-          auto-rotate-delay="0"
           camera-controls
-          rotation-per-second="25deg"
+          camera-orbit="0deg 75deg 105%"
           interaction-prompt="none"
           shadow-intensity="1"
           exposure="1.6"
@@ -192,6 +190,11 @@
         let targetArtworkY = 0;
         let currentArtworkY = 0;
 
+        // Scroll-driven disc rotation
+        let discRotationDeg = 0;
+        let targetDiscRotation = 0;
+        let currentDiscRotation = 0;
+
         function onScrollUpdate() {
           const scrollY = window.scrollY || window.pageYOffset;
           const viewportH = window.innerHeight || 800;
@@ -205,6 +208,9 @@
           } else {
             targetArtworkY = 0;
           }
+
+          // 1b. Drive disc rotation from scroll progress (0 → 1080 degrees over full scroll)
+          targetDiscRotation = progress * 1080;
 
           // 2. Fade out hero access button on initial scroll
           if (heroCtaWrapper) {
@@ -252,6 +258,13 @@
 
           if (artworkLayer) {
             artworkLayer.style.transform = 'translate3d(0, ' + currentArtworkY.toFixed(2) + 'px, 0)';
+          }
+
+          // Apply scroll-driven rotation to model-viewer via camera-orbit
+          currentDiscRotation += (targetDiscRotation - currentDiscRotation) * 0.07;
+          const cdViewer = document.getElementById('cd-viewer');
+          if (cdViewer) {
+            cdViewer.setAttribute('camera-orbit', currentDiscRotation.toFixed(2) + 'deg 75deg 105%');
           }
 
           if (discStage) {
