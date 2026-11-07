@@ -485,32 +485,7 @@ body {
     font-size: 11px;
   }
 
-  /* Mobile Background Artwork (phonesc.png) */
-  .artwork-layer {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
 
-  .artwork-layer picture,
-  .artwork-layer img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-  }
-
-  /* Disc Stage: Centered inside phonesc.png circular frame */
-  .disc-stage {
-    top: 48.3%;
-    left: 50%;
-    width: min(78vw, 38vh, 320px);
-    aspect-ratio: 1;
-    transform: translate(-50%, -50%);
-  }
 
   .hero-cta-wrapper {
     bottom: calc(env(safe-area-inset-bottom, 0px) + 22px);
