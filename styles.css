@@ -585,14 +585,24 @@ body {
   }
 
   /* Vault Console on Mobile */
-  .vault-stage {
-    aspect-ratio: auto;
+  .vault-stage-viewport {
+    min-height: clamp(500px, 80vh, 640px);
     width: 100%;
-    height: clamp(480px, 78vh, 620px);
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .vault-stage {
+    aspect-ratio: auto;
+    width: 100%;
+    height: clamp(500px, 80vh, 640px);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: none;
   }
 
   .vault-image {
@@ -602,7 +612,7 @@ body {
     height: 100%;
     object-fit: cover;
     object-position: 50% 48%;
-    transform: scale(1.42);
+    transform: scale(1.6);
   }
 
   .vault-screen {
@@ -742,12 +752,25 @@ html {
   overflow: visible;
 }
 
+.vault-stage-viewport {
+  position: relative;
+  width: 100%;
+  min-height: clamp(540px, 86vh, 920px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
 .vault-stage {
   position: relative;
   width: 100%;
-  max-width: 1920px;
+  max-width: 1600px;
   aspect-ratio: 4596 / 2020;
   margin: 0 auto;
+  transform: scale(1.55);
+  transform-origin: 49.3% 47.6%;
+  flex-shrink: 0;
 }
 
 .vault-image {
