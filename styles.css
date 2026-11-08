@@ -471,27 +471,37 @@ body {
     font-size: 11px;
   }
 
-  /* Full bleed mobile background artwork */
+  /* Center-fitted mobile background artwork preserving full graphic art */
   .artwork-layer {
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
   }
 
   .artwork-layer picture,
   .artwork-layer img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    display: block;
+    width: min(152vw, 660px);
+    max-width: none;
+    height: auto;
+    object-fit: contain;
     object-position: center;
   }
 
-  /* Pinned 3D CD Disc positioned elegantly in upper-middle */
+  /* Pinned 3D CD Disc centered right in the artwork aperture */
   .disc-stage {
-    top: 42%;
-    width: min(72vw, 36vh, 290px);
+    top: 50%;
+    left: 50%;
+    width: min(68vw, 33vh, 260px);
     aspect-ratio: 1;
+    transform: translate(-50%, -50%);
   }
 
   .hero-cta-wrapper {
@@ -513,34 +523,38 @@ body {
     border-radius: 999px;
   }
 
-  /* Story Text Cards on Mobile (Stories 3 & 4) */
+  /* Story Text Cards on Mobile: Dynamic Left & Right Cyber Narrative */
   .story-card {
-    max-width: none;
-    width: calc(100vw - 32px);
-    left: 16px !important;
-    right: 16px !important;
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 22px);
-    padding: 16px 18px;
-    text-align: center !important;
-    border: 1px solid rgba(225, 11, 11, 0.4) !important;
-    border-top: 2px solid #e10b0b !important;
-    background: rgba(10, 10, 10, 0.88) !important;
+    max-width: min(84vw, 330px);
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 26px);
+    padding: 14px 16px;
+    background: rgba(10, 10, 10, 0.90) !important;
     backdrop-filter: blur(16px) !important;
     -webkit-backdrop-filter: blur(16px) !important;
-    border-radius: 14px;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.85), 0 0 20px rgba(225, 11, 11, 0.15);
+    border-radius: 12px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.88), 0 0 20px rgba(225, 11, 11, 0.2);
   }
 
   .story-left {
-    transform: translateY(30px);
+    left: 16px !important;
+    right: auto !important;
+    text-align: left !important;
+    border: 1px solid rgba(225, 11, 11, 0.4) !important;
+    border-left: 3px solid #e10b0b !important;
+    transform: translateX(-35px);
   }
 
   .story-right {
-    transform: translateY(30px);
+    right: 16px !important;
+    left: auto !important;
+    text-align: right !important;
+    border: 1px solid rgba(225, 11, 11, 0.4) !important;
+    border-right: 3px solid #e10b0b !important;
+    transform: translateX(35px);
   }
 
   .story-card.visible {
-    transform: translateY(0);
+    transform: translateX(0);
   }
 
   .story-card.hidden-past {
@@ -567,9 +581,13 @@ body {
   }
 
   /* Vault Console on Mobile: Seamless coordinate scaling */
+  .find-data-section.vault-section {
+    min-height: 100vh;
+  }
+
   .vault-stage-viewport {
     width: 100%;
-    min-height: clamp(480px, 75vh, 600px);
+    min-height: clamp(520px, 80vh, 660px);
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -583,7 +601,7 @@ body {
     max-width: none;
     aspect-ratio: 4596 / 2020;
     margin: 0 auto;
-    transform: translateY(-26.73%) scale(2.65);
+    transform: translateY(-26.73%) scale(2.75);
     transform-origin: 49.3% 26.73%;
     flex-shrink: 0;
   }
@@ -932,6 +950,53 @@ html {
   transform: scale(1.02);
 }
 
+/* Quick Registry Query Chips */
+.quick-registry-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: calc(100% - 32px);
+  max-width: 680px;
+  margin: 16px auto 10px auto;
+  z-index: 6;
+}
+
+.chips-label {
+  font-size: 10px;
+  color: #777;
+  letter-spacing: 0.14em;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-right: 2px;
+}
+
+.query-chip {
+  background: rgba(18, 18, 18, 0.85);
+  border: 1px solid rgba(225, 11, 11, 0.35);
+  border-radius: 999px;
+  color: #ccc;
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding: 5px 13px;
+  cursor: pointer;
+  transition: all 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.query-chip:hover,
+.query-chip:active {
+  background: rgba(225, 11, 11, 0.2);
+  border-color: #ff2222;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 0 14px rgba(225, 11, 11, 0.4);
+}
+
 /* Search Results Area */
 .search-results-container {
   width: calc(100% - 32px);
@@ -1056,6 +1121,31 @@ html {
 
 .status-green {
   color: #00ff66;
+}
+
+/* Card Barcode Strip */
+.card-barcode-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+  font-family: monospace;
+}
+
+.barcode-graphic {
+  color: #666;
+  font-size: 11px;
+  letter-spacing: 2px;
+  user-select: none;
+}
+
+.barcode-auth-code {
+  font-size: 8.5px;
+  color: #888;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 /* Mobile Adjustments for Search Results */

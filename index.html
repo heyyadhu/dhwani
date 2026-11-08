@@ -10,7 +10,7 @@
     <link rel="preload" href="./assets/participation.png" as="image" media="(min-width: 769px)" />
     <link rel="preload" href="./assets/bg1.png" as="image" />
     <link rel="preload" href="./assets/vault.png" as="image" />
-    <link rel="stylesheet" href="./styles.css?v=24" />
+    <link rel="stylesheet" href="./styles.css?v=25" />
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   </head>
   <body>
@@ -140,6 +140,15 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- Quick Registry Suggestion Chips -->
+      <div class="quick-registry-chips" id="quick-registry-chips" aria-label="Suggested registry queries">
+        <span class="chips-label">// QUICK QUERY:</span>
+        <button type="button" class="query-chip" data-name="Anandhu S. Kumar">Anandhu S. Kumar</button>
+        <button type="button" class="query-chip" data-name="Aarav Sharma">Aarav Sharma</button>
+        <button type="button" class="query-chip" data-name="Maya Menon">Maya Menon</button>
+        <button type="button" class="query-chip" data-name="Priya Nair">Priya Nair</button>
       </div>
 
       <!-- Search Results Card Container (Shows when searched) -->
@@ -388,9 +397,41 @@
                   <span class="detail-value status-green">VALIDATED</span>
                 </div>
               </div>
+
+              <!-- Cyberpunk Auth Code / Barcode Strip -->
+              <div class="card-barcode-strip">
+                <span class="barcode-graphic" aria-hidden="true">||||||| | ||||| || |||||| ||| |||| |</span>
+                <span class="barcode-auth-code">AUTHENTICATED // ARCHIVE SEC-01</span>
+              </div>
             </div>
           `).join('');
         }
+
+        // Quick query suggestion chips
+        document.querySelectorAll('.query-chip').forEach(function(chip) {
+          chip.addEventListener('click', function() {
+            var name = this.getAttribute('data-name');
+            if (name) {
+              searchInput.value = name;
+              executeSearch();
+              resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+          });
+        });
+
+        // Header smooth navigation links
+        document.querySelectorAll('.nav-link, .brand-logo').forEach(function(link) {
+          link.addEventListener('click', function(e) {
+            var href = this.getAttribute('href');
+            if (href && href.startsWith('#')) {
+              e.preventDefault();
+              var target = document.querySelector(href);
+              if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+              }
+            }
+          });
+        });
 
         searchInput.addEventListener('input', executeSearch);
         searchForm.addEventListener('submit', function(e) {
