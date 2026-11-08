@@ -8,10 +8,9 @@
     <title>The Dhwani Archive</title>
     <link href="https://fonts.cdnfonts.com/css/horizon" rel="stylesheet" />
     <link rel="preload" href="./assets/participation.png" as="image" media="(min-width: 769px)" />
-    <link rel="preload" href="./assets/hand1.png" as="image" />
-    <link rel="preload" href="./assets/hand2.png" as="image" />
+    <link rel="preload" href="./assets/bg1.png" as="image" />
     <link rel="preload" href="./assets/vault.png" as="image" />
-    <link rel="stylesheet" href="./styles.css?v=20" />
+    <link rel="stylesheet" href="./styles.css?v=22" />
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   </head>
   <body>
@@ -39,6 +38,11 @@
       <!-- Background Artwork (Hero State, moves upward on scroll) -->
       <div class="artwork-layer" id="artwork-layer" aria-hidden="true">
         <img src="./assets/participation.png" alt="Dhwani Visual Archive" id="artwork-img" />
+      </div>
+
+      <!-- Radial Reveal Background Layer (bg1.png slowly blooms outward from center on scroll) -->
+      <div class="radial-reveal-layer" id="radial-reveal-layer" aria-hidden="true">
+        <img src="./assets/bg1.png" alt="Dhwani Atmosphere" id="radial-reveal-img" />
       </div>
 
       <!-- Pinned 3D CD Model Stage (floats in viewport, rotates, moves down as you reach end) -->
@@ -79,18 +83,8 @@
         </div>
       </div>
 
-      <!-- Story Typography Overlay (Appears gradually from Left & Right as you scroll) -->
+      <!-- Story Typography Overlay (Appears gradually as you scroll) -->
       <div class="story-overlay-viewport">
-        <!-- Story 1: Left Side (Hand Visual) -->
-        <article class="story-card story-left story-art-card" id="story-1">
-          <img src="./assets/hand1.png" alt="Dhwani Hand Visual" class="story-art-image" />
-        </article>
-
-        <!-- Story 2: Right Side (Hand Visual 2) -->
-        <article class="story-card story-right story-art-card story-art-right" id="story-2">
-          <img src="./assets/hand2.png" alt="Dhwani Hand Visual 2" class="story-art-image" />
-        </article>
-
         <!-- Story 3: Left Side -->
         <article class="story-card story-left" id="story-3">
           <div class="story-badge">// 03 &bull; ACCREDITED PRESENCE</div>
@@ -166,15 +160,14 @@
         const discStage = document.getElementById('disc-stage');
         const cdViewer = document.getElementById('cd-viewer');
         const artworkLayer = document.getElementById('artwork-layer');
+        const radialRevealLayer = document.getElementById('radial-reveal-layer');
         const heroCtaWrapper = document.getElementById('hero-cta-wrapper');
         const accessLink = document.getElementById('access-link');
         const findDataSection = document.getElementById('find-data-section');
 
         const stories = [
-          document.getElementById('story-1'),
-          document.getElementById('story-2'),
-          document.getElementById('story-3'),
-          document.getElementById('story-4')
+          { el: document.getElementById('story-3'), start: 0.30, peak: 0.44, end: 0.58 },
+          { el: document.getElementById('story-4'), start: 0.62, peak: 0.76, end: 0.90 }
         ];
 
         // Smooth scroll on clicking "CLICK TO ACCESS"
@@ -197,6 +190,10 @@
         let targetArtworkY = 0;
         let currentArtworkY = 0;
 
+        // Radial reveal of bg1.png from center
+        let targetRadialRadius = 0;
+        let currentRadialRadius = 0;
+
         // Scroll-driven disc rotation
         let discRotationDeg = 0;
         let targetDiscRotation = 0;
@@ -209,14 +206,18 @@
           const progress = Math.max(0, Math.min(1, scrollY / Math.max(1, trackHeight)));
 
           // 1. Move artwork (participation.png) upwards as user scrolls down
-          // On mobile, phonesc.png is full-cover fixed -- skip parallax
+          // On mobile, skip parallax
           if (window.innerWidth > 768) {
             targetArtworkY = -scrollY * 0.85;
           } else {
             targetArtworkY = 0;
           }
 
-          // 1b. Real-time, zero-delay disc rotation directly mapped to scroll progress (0 - 360deg)
+          // 1b. Slowly radial reveal bg1.png from center behind the 3D CD after participation.png moves
+          const revealFactor = smoothstep(0.06, 0.65, progress);
+          targetRadialRadius = revealFactor * 120; // 0% up to 120% (fully covers entire screen)
+
+          // 1c. Real-time, zero-delay disc rotation directly mapped to scroll progress (0 - 360deg)
           // No artificial clamping or dead zones so reverse scrolling begins spinning back instantly
           targetDiscRotation = progress * 360;
 
@@ -230,26 +231,18 @@
           // 2b. Subtle natural vertical float for the disc as you scroll
           targetDriftY = progress * 60;
 
-          // 3. Gradual emergence of stories from Left and Right sides
-          const ranges = [
-            { start: 0.08, peak: 0.20, end: 0.30 },
-            { start: 0.29, peak: 0.41, end: 0.52 },
-            { start: 0.51, peak: 0.63, end: 0.74 },
-            { start: 0.73, peak: 0.83, end: 0.90 }
-          ];
-
-          stories.forEach((story, idx) => {
-            if (!story) return;
-            const r = ranges[idx];
-            if (progress >= r.start && progress <= r.end) {
-              story.classList.add('visible');
-              story.classList.remove('hidden-past');
-            } else if (progress > r.end) {
-              story.classList.remove('visible');
-              story.classList.add('hidden-past');
+          // 3. Gradual emergence of stories
+          stories.forEach(item => {
+            if (!item.el) return;
+            if (progress >= item.start && progress <= item.end) {
+              item.el.classList.add('visible');
+              item.el.classList.remove('hidden-past');
+            } else if (progress > item.end) {
+              item.el.classList.remove('visible');
+              item.el.classList.add('hidden-past');
             } else {
-              story.classList.remove('visible');
-              story.classList.remove('hidden-past');
+              item.el.classList.remove('visible');
+              item.el.classList.remove('hidden-past');
             }
           });
         }
@@ -262,6 +255,30 @@
 
           if (artworkLayer) {
             artworkLayer.style.transform = 'translate3d(0, ' + currentArtworkY.toFixed(2) + 'px, 0)';
+          }
+
+          // Smooth radial reveal rendering from center behind the 3D CD
+          currentRadialRadius += (targetRadialRadius - currentRadialRadius) * 0.08;
+          if (radialRevealLayer) {
+            if (currentRadialRadius <= 0.3) {
+              radialRevealLayer.style.opacity = '0';
+              radialRevealLayer.style.clipPath = 'circle(0% at 50% 50%)';
+              radialRevealLayer.style.webkitClipPath = 'circle(0% at 50% 50%)';
+            } else if (currentRadialRadius >= 118) {
+              radialRevealLayer.style.opacity = '1';
+              radialRevealLayer.style.clipPath = 'none';
+              radialRevealLayer.style.webkitClipPath = 'none';
+              radialRevealLayer.style.maskImage = 'none';
+              radialRevealLayer.style.webkitMaskImage = 'none';
+            } else {
+              radialRevealLayer.style.opacity = '1';
+              const r = currentRadialRadius.toFixed(1);
+              const innerR = Math.max(0, currentRadialRadius - 14).toFixed(1);
+              radialRevealLayer.style.clipPath = 'circle(' + r + '% at 50% 50%)';
+              radialRevealLayer.style.webkitClipPath = 'circle(' + r + '% at 50% 50%)';
+              radialRevealLayer.style.maskImage = 'radial-gradient(circle at 50% 50%, #000 ' + innerR + '%, transparent ' + r + '%)';
+              radialRevealLayer.style.webkitMaskImage = 'radial-gradient(circle at 50% 50%, #000 ' + innerR + '%, transparent ' + r + '%)';
+            }
           }
 
           // Zero-delay rotation: tracks scroll in real-time with zero lag or delay on reverse scrolling

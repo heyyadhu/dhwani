@@ -412,55 +412,27 @@ body {
 }
 
 
-/* Story Art Cards (Hand Visuals 1 & 2) */
-.story-art-card {
-  background: transparent;
-  border: none !important;
-  box-shadow: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  padding: 0;
-  width: clamp(380px, 54vw, 780px);
-  max-width: none;
+/* Radial Reveal Background Layer (bg1.png reveals from center on scroll) */
+.radial-reveal-layer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
   pointer-events: none;
+  overflow: hidden;
+  opacity: 0;
+  will-change: clip-path, -webkit-clip-path, mask-image, -webkit-mask-image, opacity;
+  clip-path: circle(0% at 50% 50%);
+  -webkit-clip-path: circle(0% at 50% 50%);
 }
 
-.story-art-card.story-left {
-  left: 0 !important;
-  right: auto !important;
-  transform: translateX(-15%);
-}
-
-.story-art-card.story-left.visible {
-  transform: translateX(0);
-}
-
-.story-art-card.story-left.hidden-past {
-  transform: translateY(-24px);
-}
-
-.story-art-card.story-right {
-  right: 0 !important;
-  left: auto !important;
-  transform: translateX(15%);
-}
-
-.story-art-card.story-right.visible {
-  transform: translateX(0);
-}
-
-.story-art-card.story-right.hidden-past {
-  transform: translateY(-24px);
-}
-
-.story-art-image {
+.radial-reveal-layer img {
   display: block;
   width: 100%;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 14px 35px rgba(0, 0, 0, 0.95));
-  pointer-events: none;
-  user-select: none;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 /* Tablet & Mobile Layout for Scroll Journey (Optimized with phonesc.png) */
@@ -537,52 +509,6 @@ body {
     font-size: 11.5px;
   }
 
-  /* Story Art Cards (Hands 1 & 2) on Mobile: Slide horizontally beside the 3D CD */
-  .story-card.story-art-card.story-left {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    padding: 0 !important;
-    width: min(85vw, 380px) !important;
-    left: 0 !important;
-    right: auto !important;
-    top: 48.3% !important;
-    bottom: auto !important;
-    transform: translateY(-50%) translateX(-22%);
-  }
-
-  .story-card.story-art-card.story-left.visible {
-    transform: translateY(-50%) translateX(0);
-  }
-
-  .story-card.story-art-card.story-left.hidden-past {
-    transform: translateY(-50%) translateY(-20px);
-  }
-
-  .story-card.story-art-card.story-right {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    padding: 0 !important;
-    width: min(85vw, 380px) !important;
-    left: auto !important;
-    right: 0 !important;
-    top: 48.3% !important;
-    bottom: auto !important;
-    transform: translateY(-50%) translateX(22%);
-  }
-
-  .story-card.story-art-card.story-right.visible {
-    transform: translateY(-50%) translateX(0);
-  }
-
-  .story-card.story-art-card.story-right.hidden-past {
-    transform: translateY(-50%) translateY(-20px);
-  }
 
   /* Vault Console on Mobile */
   .vault-stage-viewport {
@@ -590,7 +516,7 @@ body {
     width: 100%;
     overflow: hidden;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
   }
 
@@ -600,7 +526,7 @@ body {
     height: clamp(500px, 80vh, 640px);
     overflow: hidden;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     transform: none;
   }
@@ -611,13 +537,14 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 48%;
+    object-position: 50% 26.73%;
     transform: scale(1.6);
+    transform-origin: 50% 26.73%;
   }
 
   .vault-screen {
     position: absolute;
-    top: 48%;
+    top: 36%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: min(88vw, 380px);
@@ -680,16 +607,11 @@ body {
     width: min(76vw, 36vh, 290px);
   }
 
-  .story-card:not(.story-art-card) {
+  .story-card {
     width: calc(100vw - 24px);
     left: 12px !important;
     right: 12px !important;
     padding: 13px 15px;
-  }
-
-  .story-card.story-art-card.story-left,
-  .story-card.story-art-card.story-right {
-    width: min(88vw, 340px) !important;
   }
 }
 
@@ -757,7 +679,7 @@ html {
   width: 100%;
   min-height: clamp(540px, 86vh, 920px);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   overflow: hidden;
 }
@@ -768,8 +690,8 @@ html {
   max-width: 1600px;
   aspect-ratio: 4596 / 2020;
   margin: 0 auto;
-  transform: scale(1.55);
-  transform-origin: 49.3% 47.6%;
+  transform: translateY(-26.73%) scale(1.55);
+  transform-origin: 49.3% 26.73%;
   flex-shrink: 0;
 }
 
