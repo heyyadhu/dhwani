@@ -448,7 +448,7 @@ body {
   object-position: center;
 }
 
-/* Tablet & Mobile Layout for Scroll Journey (Optimized with phonesc.png) */
+/* Tablet & Mobile Layout for Scroll Journey */
 @media (max-width: 768px), (max-aspect-ratio: 4 / 5) {
   .header-status {
     display: none;
@@ -471,17 +471,46 @@ body {
     font-size: 11px;
   }
 
+  /* Full bleed mobile background artwork */
+  .artwork-layer {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+  }
 
+  .artwork-layer picture,
+  .artwork-layer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Pinned 3D CD Disc positioned elegantly in upper-middle */
+  .disc-stage {
+    top: 42%;
+    width: min(72vw, 36vh, 290px);
+    aspect-ratio: 1;
+  }
 
   .hero-cta-wrapper {
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 22px);
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
     z-index: 5;
+    width: calc(100vw - 36px);
+    max-width: 320px;
   }
 
   .access-link {
-    min-height: 40px;
-    padding: 8px 18px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 10px 18px;
     font-size: 11px;
+    letter-spacing: 0.12em;
+    border-radius: 999px;
   }
 
   /* Story Text Cards on Mobile (Stories 3 & 4) */
@@ -490,11 +519,16 @@ body {
     width: calc(100vw - 32px);
     left: 16px !important;
     right: 16px !important;
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 22px);
     padding: 16px 18px;
     text-align: center !important;
     border: 1px solid rgba(225, 11, 11, 0.4) !important;
     border-top: 2px solid #e10b0b !important;
+    background: rgba(10, 10, 10, 0.88) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-radius: 14px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.85), 0 0 20px rgba(225, 11, 11, 0.15);
   }
 
   .story-left {
@@ -513,88 +547,115 @@ body {
     transform: translateY(-20px);
   }
 
+  .story-badge {
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+    margin-bottom: 5px;
+  }
+
   .story-title {
-    font-size: 14.5px;
-    margin-bottom: 6px;
+    font-size: clamp(14px, 4vw, 17px);
+    margin-bottom: 5px;
+    letter-spacing: 0.06em;
+    line-height: 1.25;
   }
 
   .story-description {
-    font-size: 11.5px;
+    font-size: clamp(11px, 3.2vw, 12.5px);
+    line-height: 1.5;
+    color: #bbb;
   }
 
-
-  /* Vault Console on Mobile */
+  /* Vault Console on Mobile: Seamless coordinate scaling */
   .vault-stage-viewport {
-    min-height: clamp(500px, 80vh, 640px);
     width: 100%;
-    overflow: hidden;
+    min-height: clamp(480px, 75vh, 600px);
     display: flex;
     align-items: flex-start;
     justify-content: center;
+    overflow: hidden;
+    position: relative;
   }
 
   .vault-stage {
-    aspect-ratio: auto;
+    position: relative;
     width: 100%;
-    height: clamp(500px, 80vh, 640px);
-    overflow: hidden;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    transform: none;
+    max-width: none;
+    aspect-ratio: 4596 / 2020;
+    margin: 0 auto;
+    transform: translateY(-26.73%) scale(2.65);
+    transform-origin: 49.3% 26.73%;
+    flex-shrink: 0;
   }
 
   .vault-image {
-    position: absolute;
-    inset: 0;
+    display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: 50% 26.73%;
-    transform: scale(1.6);
-    transform-origin: 50% 26.73%;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
   }
 
   .vault-screen {
     position: absolute;
-    top: 36%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: min(88vw, 380px);
-    height: auto;
-    min-height: 175px;
-    padding: 16px 12px;
+    top: 35.74%;
+    left: 32.46%;
+    width: 33.64%;
+    height: 23.76%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+    padding: clamp(3px, 1vw, 8px);
+    z-index: 2;
+    overflow: hidden;
   }
 
   .vault-screen .section-tag {
-    font-size: 9.5px;
-    margin-bottom: 4px;
+    font-size: clamp(7.5px, 2vw, 9px);
+    letter-spacing: 0.14em;
+    margin-bottom: 2px;
   }
 
   .vault-screen .find-data-title {
-    font-size: 19px;
-    margin-bottom: 4px;
+    font-size: clamp(13px, 3.5vw, 17px);
+    letter-spacing: 0.06em;
+    margin-bottom: 2px;
+    line-height: 1.15;
   }
 
   .vault-screen .find-data-subtitle {
-    font-size: 11px;
-    margin-bottom: 10px;
+    font-size: clamp(8.5px, 2.2vw, 10.5px);
+    letter-spacing: 0.02em;
+    margin-bottom: 6px;
+  }
+
+  .vault-screen .search-form {
+    width: 96%;
+    max-width: 360px;
   }
 
   .vault-screen .search-input-group {
-    height: 38px;
-    padding-left: 12px;
+    height: clamp(30px, 7.5vw, 36px);
+    padding: 2px 4px 2px clamp(8px, 2.5vw, 14px);
+    border-radius: 999px;
   }
 
   .vault-screen .search-input {
-    font-size: 12px;
+    font-size: clamp(10px, 2.6vw, 12px);
+    min-width: 0;
   }
 
   .vault-screen .search-submit-btn {
-    font-size: 10.5px;
-    padding: 0 14px;
+    font-size: clamp(8.5px, 2.2vw, 10.5px);
+    padding: 0 clamp(10px, 2.5vw, 14px);
+    height: 100%;
+    border-radius: 999px;
+    letter-spacing: 0.1em;
   }
-
 }
 
 /* Compact Mobile (under 420px) */
@@ -616,8 +677,8 @@ body {
   }
 
   .disc-stage {
-    top: 48.3%;
-    width: min(76vw, 36vh, 290px);
+    top: 41%;
+    width: min(74vw, 36vh, 275px);
   }
 
   .story-card {
@@ -625,6 +686,16 @@ body {
     left: 12px !important;
     right: 12px !important;
     padding: 13px 15px;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
+  }
+
+  .vault-stage {
+    transform: translateY(-26.73%) scale(2.85);
+    transform-origin: 49.3% 26.73%;
+  }
+
+  .vault-stage-viewport {
+    min-height: clamp(450px, 70vh, 560px);
   }
 }
 
@@ -987,19 +1058,39 @@ html {
   color: #00ff66;
 }
 
-/* Mobile Adjustments */
+/* Mobile Adjustments for Search Results */
 @media (max-width: 540px) {
-  .search-input-group {
-    padding: 4px 6px 4px 16px;
+  .search-results-container {
+    width: calc(100% - 24px);
+    margin: 14px auto 40px auto;
   }
 
-  .search-submit-btn {
-    padding: 10px 18px;
-    font-size: 10.5px;
+  .user-data-card {
+    padding: 18px 16px;
+    border-radius: 12px;
+  }
+
+  .user-card-name {
+    font-size: 18px;
+  }
+
+  .user-card-role {
+    font-size: 12px;
+    margin-bottom: 14px;
   }
 
   .user-data-details {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 14px;
+    padding-top: 12px;
+  }
+
+  .detail-label {
+    font-size: 9px;
+  }
+
+  .detail-value {
+    font-size: 11.5px;
   }
 }
 

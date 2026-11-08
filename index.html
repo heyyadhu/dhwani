@@ -10,7 +10,7 @@
     <link rel="preload" href="./assets/participation.png" as="image" media="(min-width: 769px)" />
     <link rel="preload" href="./assets/bg1.png" as="image" />
     <link rel="preload" href="./assets/vault.png" as="image" />
-    <link rel="stylesheet" href="./styles.css?v=23" />
+    <link rel="stylesheet" href="./styles.css?v=24" />
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   </head>
   <body>
@@ -210,12 +210,7 @@
           const progress = Math.max(0, Math.min(1, scrollY / Math.max(1, trackHeight)));
 
           // 1. Move artwork (participation.png) upwards as user scrolls down
-          // On mobile, skip parallax
-          if (window.innerWidth > 768) {
-            targetArtworkY = -scrollY * 0.85;
-          } else {
-            targetArtworkY = 0;
-          }
+          targetArtworkY = -scrollY * 0.85;
 
           // 1b. Slowly radial reveal bg1.png from center behind the 3D CD after participation.png moves
           const revealEndProgress = 0.46;
