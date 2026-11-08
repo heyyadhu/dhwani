@@ -412,7 +412,7 @@ body {
 }
 
 
-/* Radial Reveal Background Layer (bg1.png reveals from center on scroll) */
+/* Radial Reveal Background Layer (bg1.png reveals from center on scroll, then moves up) */
 .radial-reveal-layer {
   position: fixed;
   inset: 0;
@@ -422,9 +422,22 @@ body {
   pointer-events: none;
   overflow: hidden;
   opacity: 0;
-  will-change: clip-path, -webkit-clip-path, mask-image, -webkit-mask-image, opacity;
+  will-change: transform, clip-path, -webkit-clip-path, mask-image, -webkit-mask-image, opacity;
   clip-path: circle(0% at 50% 50%);
   -webkit-clip-path: circle(0% at 50% 50%);
+  transform: translate3d(0, 0, 0);
+}
+
+.radial-reveal-layer::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 25vh;
+  background: linear-gradient(to bottom, transparent, #000 95%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .radial-reveal-layer img {

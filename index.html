@@ -10,7 +10,7 @@
     <link rel="preload" href="./assets/participation.png" as="image" media="(min-width: 769px)" />
     <link rel="preload" href="./assets/bg1.png" as="image" />
     <link rel="preload" href="./assets/vault.png" as="image" />
-    <link rel="stylesheet" href="./styles.css?v=22" />
+    <link rel="stylesheet" href="./styles.css?v=23" />
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   </head>
   <body>
@@ -194,6 +194,10 @@
         let targetRadialRadius = 0;
         let currentRadialRadius = 0;
 
+        // Upward scroll movement of bg1.png after reveal
+        let targetBg1Y = 0;
+        let currentBg1Y = 0;
+
         // Scroll-driven disc rotation
         let discRotationDeg = 0;
         let targetDiscRotation = 0;
@@ -214,10 +218,20 @@
           }
 
           // 1b. Slowly radial reveal bg1.png from center behind the 3D CD after participation.png moves
-          const revealFactor = smoothstep(0.06, 0.65, progress);
+          const revealEndProgress = 0.46;
+          const revealFactor = smoothstep(0.06, revealEndProgress, progress);
           targetRadialRadius = revealFactor * 120; // 0% up to 120% (fully covers entire screen)
 
-          // 1c. Real-time, zero-delay disc rotation directly mapped to scroll progress (0 - 360deg)
+          // 1c. After the reveal, move bg1 upwards with the scroll
+          const revealEndScroll = trackHeight * revealEndProgress;
+          if (scrollY > revealEndScroll) {
+            const scrollPastReveal = scrollY - revealEndScroll;
+            targetBg1Y = -scrollPastReveal * 0.85;
+          } else {
+            targetBg1Y = 0;
+          }
+
+          // 1d. Real-time, zero-delay disc rotation directly mapped to scroll progress (0 - 360deg)
           // No artificial clamping or dead zones so reverse scrolling begins spinning back instantly
           targetDiscRotation = progress * 360;
 
@@ -252,6 +266,7 @@
           const ease = 0.09; // damping factor
           currentDriftY += (targetDriftY - currentDriftY) * ease;
           currentArtworkY += (targetArtworkY - currentArtworkY) * ease;
+          currentBg1Y += (targetBg1Y - currentBg1Y) * ease;
 
           if (artworkLayer) {
             artworkLayer.style.transform = 'translate3d(0, ' + currentArtworkY.toFixed(2) + 'px, 0)';
@@ -260,6 +275,7 @@
           // Smooth radial reveal rendering from center behind the 3D CD
           currentRadialRadius += (targetRadialRadius - currentRadialRadius) * 0.08;
           if (radialRevealLayer) {
+            radialRevealLayer.style.transform = 'translate3d(0, ' + currentBg1Y.toFixed(2) + 'px, 0)';
             if (currentRadialRadius <= 0.3) {
               radialRevealLayer.style.opacity = '0';
               radialRevealLayer.style.clipPath = 'circle(0% at 50% 50%)';
