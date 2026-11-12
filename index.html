@@ -9,7 +9,7 @@
     <link href="https://fonts.cdnfonts.com/css/horizon" rel="stylesheet" />
     <link rel="preload" href="./assets/participation.png" as="image" media="(min-width: 769px)" />
     <link rel="preload" href="./assets/bg1.png" as="image" />
-    <link rel="stylesheet" href="./styles.css?v=26" />
+    <link rel="stylesheet" href="./styles.css?v=27" />
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   </head>
   <body>
@@ -42,6 +42,28 @@
       <!-- Radial Reveal Background Layer (bg1.png slowly blooms outward from center on scroll) -->
       <div class="radial-reveal-layer" id="radial-reveal-layer" aria-hidden="true">
         <img src="./assets/bg1.png" alt="Dhwani Atmosphere" id="radial-reveal-img" />
+      </div>
+
+      <!-- Red Path Trim Curvy Line Layer (trims from left to right after the scroll of bg1.png) -->
+      <div class="red-path-trim-layer" id="red-path-trim-layer" aria-hidden="true">
+        <svg class="red-curvy-svg" viewBox="0 0 1440 600" preserveAspectRatio="none">
+          <!-- Subtle Faint Guide Path -->
+          <path
+            class="curvy-path-ghost"
+            d="M -30,380 C 260,140 440,520 720,290 C 1000,70 1200,480 1470,260"
+          />
+          <!-- Glowing Red Trim Path -->
+          <path
+            id="red-curvy-path"
+            class="curvy-path-main"
+            d="M -30,380 C 260,140 440,520 720,290 C 1000,70 1200,480 1470,260"
+          />
+          <!-- Leading Spark Head -->
+          <g id="trim-head-group" class="trim-head-group">
+            <circle id="trim-head-glow" class="trim-head-glow" cx="-100" cy="-100" r="14" />
+            <circle id="trim-head-core" class="trim-head-core" cx="-100" cy="-100" r="4.5" />
+          </g>
+        </svg>
       </div>
 
       <!-- Pinned 3D CD Model Stage (floats in viewport, rotates, moves down as you reach end) -->
@@ -198,6 +220,25 @@
         let targetBg1Y = 0;
         let currentBg1Y = 0;
 
+        // Red curvy path trim animation (after the scroll of bg1.png)
+        const redTrimLayer = document.getElementById('red-path-trim-layer');
+        const redCurvyPath = document.getElementById('red-curvy-path');
+        const trimHeadGroup = document.getElementById('trim-head-group');
+        const trimHeadGlow = document.getElementById('trim-head-glow');
+        const trimHeadCore = document.getElementById('trim-head-core');
+
+        let pathTotalLength = 0;
+        if (redCurvyPath) {
+          pathTotalLength = redCurvyPath.getTotalLength();
+          redCurvyPath.style.strokeDasharray = pathTotalLength;
+          redCurvyPath.style.strokeDashoffset = pathTotalLength;
+        }
+
+        let targetPathTrim = 0;
+        let currentPathTrim = 0;
+        let targetTrimOpacity = 0;
+        let currentTrimOpacity = 0;
+
         // Scroll-driven disc rotation
         let discRotationDeg = 0;
         let targetDiscRotation = 0;
@@ -226,7 +267,25 @@
             targetBg1Y = 0;
           }
 
-          // 1d. Real-time, zero-delay disc rotation directly mapped to scroll progress (0 - 360deg)
+          // 1d. Red curvy path trim animation from left to right (after the scroll of bg1.png)
+          const trimStart = 0.52;
+          const trimEnd = 0.88;
+          targetPathTrim = smoothstep(trimStart, trimEnd, progress);
+
+          // Visibility window for the red trim path layer
+          if (progress >= 0.48 && progress <= 0.94) {
+            if (progress < 0.55) {
+              targetTrimOpacity = (progress - 0.48) / 0.07;
+            } else if (progress > 0.88) {
+              targetTrimOpacity = 1 - (progress - 0.88) / 0.06;
+            } else {
+              targetTrimOpacity = 1;
+            }
+          } else {
+            targetTrimOpacity = 0;
+          }
+
+          // 1e. Real-time, zero-delay disc rotation directly mapped to scroll progress (0 - 360deg)
           // No artificial clamping or dead zones so reverse scrolling begins spinning back instantly
           targetDiscRotation = progress * 360;
 
@@ -289,6 +348,32 @@
               radialRevealLayer.style.webkitClipPath = 'circle(' + r + '% at 50% 50%)';
               radialRevealLayer.style.maskImage = 'radial-gradient(circle at 50% 50%, #000 ' + innerR + '%, transparent ' + r + '%)';
               radialRevealLayer.style.webkitMaskImage = 'radial-gradient(circle at 50% 50%, #000 ' + innerR + '%, transparent ' + r + '%)';
+            }
+          }
+
+          // Smooth red curvy path trim animation from left to right
+          currentPathTrim += (targetPathTrim - currentPathTrim) * ease;
+          currentTrimOpacity += (targetTrimOpacity - currentTrimOpacity) * ease;
+
+          if (redTrimLayer) {
+            redTrimLayer.style.opacity = currentTrimOpacity.toFixed(3);
+          }
+
+          if (redCurvyPath && pathTotalLength > 0) {
+            const offset = pathTotalLength * (1 - currentPathTrim);
+            redCurvyPath.style.strokeDashoffset = offset.toFixed(2);
+
+            if (trimHeadGroup && trimHeadCore && trimHeadGlow) {
+              if (currentPathTrim > 0.008 && currentPathTrim < 0.995 && currentTrimOpacity > 0.08) {
+                trimHeadGroup.style.opacity = '1';
+                const pt = redCurvyPath.getPointAtLength(pathTotalLength * currentPathTrim);
+                trimHeadCore.setAttribute('cx', pt.x.toFixed(1));
+                trimHeadCore.setAttribute('cy', pt.y.toFixed(1));
+                trimHeadGlow.setAttribute('cx', pt.x.toFixed(1));
+                trimHeadGlow.setAttribute('cy', pt.y.toFixed(1));
+              } else {
+                trimHeadGroup.style.opacity = '0';
+              }
             }
           }
 
