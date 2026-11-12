@@ -580,99 +580,39 @@ body {
     color: #bbb;
   }
 
-  /* Vault Console on Mobile: Seamless coordinate scaling */
-  .find-data-section.vault-section {
-    min-height: 100vh;
+  /* Find Data Section on Mobile */
+  .find-data-section {
+    min-height: 85vh;
+    padding: 60px 16px 40px 16px;
   }
 
-  .vault-stage-viewport {
-    width: 100%;
-    min-height: clamp(520px, 80vh, 660px);
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
+  .find-data-title {
+    font-size: clamp(20px, 6vw, 28px);
+    margin-bottom: 8px;
   }
 
-  .vault-stage {
-    position: relative;
-    width: 100%;
-    max-width: none;
-    aspect-ratio: 4596 / 2020;
-    margin: 0 auto;
-    transform: translateY(-26.73%) scale(2.75);
-    transform-origin: 49.3% 26.73%;
-    flex-shrink: 0;
+  .find-data-subtitle {
+    font-size: 12.5px;
+    margin-bottom: 20px;
   }
 
-  .vault-image {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    pointer-events: none;
-    user-select: none;
+  .search-form {
+    max-width: 100%;
+    margin-bottom: 16px;
   }
 
-  .vault-screen {
-    position: absolute;
-    top: 35.74%;
-    left: 32.46%;
-    width: 33.64%;
-    height: 23.76%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    box-sizing: border-box;
-    padding: clamp(3px, 1vw, 8px);
-    z-index: 2;
-    overflow: hidden;
+  .search-input-group {
+    height: 46px;
+    padding: 4px 6px 4px 14px;
   }
 
-  .vault-screen .section-tag {
-    font-size: clamp(7.5px, 2vw, 9px);
-    letter-spacing: 0.14em;
-    margin-bottom: 2px;
+  .search-input {
+    font-size: 13px;
   }
 
-  .vault-screen .find-data-title {
-    font-size: clamp(13px, 3.5vw, 17px);
-    letter-spacing: 0.06em;
-    margin-bottom: 2px;
-    line-height: 1.15;
-  }
-
-  .vault-screen .find-data-subtitle {
-    font-size: clamp(8.5px, 2.2vw, 10.5px);
-    letter-spacing: 0.02em;
-    margin-bottom: 6px;
-  }
-
-  .vault-screen .search-form {
-    width: 96%;
-    max-width: 360px;
-  }
-
-  .vault-screen .search-input-group {
-    height: clamp(30px, 7.5vw, 36px);
-    padding: 2px 4px 2px clamp(8px, 2.5vw, 14px);
-    border-radius: 999px;
-  }
-
-  .vault-screen .search-input {
-    font-size: clamp(10px, 2.6vw, 12px);
-    min-width: 0;
-  }
-
-  .vault-screen .search-submit-btn {
-    font-size: clamp(8.5px, 2.2vw, 10.5px);
-    padding: 0 clamp(10px, 2.5vw, 14px);
-    height: 100%;
-    border-radius: 999px;
-    letter-spacing: 0.1em;
+  .search-submit-btn {
+    padding: 0 16px;
+    font-size: 10px;
   }
 }
 
@@ -705,15 +645,6 @@ body {
     right: 12px !important;
     padding: 13px 15px;
     bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
-  }
-
-  .vault-stage {
-    transform: translateY(-26.73%) scale(2.85);
-    transform-origin: 49.3% 26.73%;
-  }
-
-  .vault-stage-viewport {
-    min-height: clamp(450px, 70vh, 560px);
   }
 }
 
@@ -757,197 +688,158 @@ html {
 }
 
 /* ==========================================================================
-   Find Your Data Vault Console Section (vault.png)
+   Find Your Data Section (Cyber Registry Console)
    ========================================================================== */
-.find-data-section.vault-section {
+.find-data-section {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  min-height: 85vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #000;
-  border-top: 1px solid rgba(225, 11, 11, 0.28);
+  background-color: #060606;
+  background-image: 
+    radial-gradient(rgba(225, 11, 11, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, #000 0%, #060606 25%, #060606 75%, #000 100%);
+  background-size: 28px 28px, 100% 100%;
+  border-top: 1px solid rgba(225, 11, 11, 0.35);
   box-shadow: 0 -24px 60px rgba(0, 0, 0, 0.95);
-  padding: 0;
+  padding: clamp(60px, 9vh, 100px) clamp(20px, 4vw, 48px);
   z-index: 5;
   color: #fff;
-  overflow: visible;
 }
 
-.vault-stage-viewport {
-  position: relative;
-  width: 100%;
-  min-height: clamp(540px, 86vh, 920px);
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.vault-stage {
-  position: relative;
-  width: 100%;
-  max-width: 1600px;
-  aspect-ratio: 4596 / 2020;
+.find-data-container {
+  max-width: 720px;
   margin: 0 auto;
-  transform: translateY(-26.73%) scale(1.55);
-  transform-origin: 49.3% 26.73%;
-  flex-shrink: 0;
-}
-
-.vault-image {
-  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* Blank center display screen in vault.png */
-.vault-screen {
-  position: absolute;
-  top: 35.74%;
-  left: 32.46%;
-  width: 33.64%;
-  height: 23.76%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   text-align: center;
-  box-sizing: border-box;
-  padding: clamp(4px, 0.8vw, 16px);
-  z-index: 2;
-  overflow: hidden;
 }
 
-.vault-screen-content {
-  width: 100%;
-  max-width: 520px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.find-data-header {
+  margin-bottom: clamp(24px, 3.5vh, 36px);
 }
 
-.vault-screen .section-tag {
+.section-tag {
   color: #e10b0b;
-  font-size: clamp(8px, 0.72vw, 11px);
-  letter-spacing: 0.16em;
+  font-size: clamp(10px, 0.8vw, 12px);
+  letter-spacing: 0.18em;
   font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: clamp(2px, 0.35vw, 6px);
+  margin-bottom: 10px;
 }
 
-.vault-screen .find-data-title {
+.find-data-title {
   font-family: "Horizon", sans-serif;
-  font-size: clamp(13px, 1.4vw, 25px);
+  font-size: clamp(22px, 3.6vw, 42px);
   color: #fff;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  margin: 0 0 clamp(2px, 0.35vw, 6px) 0;
+  margin: 0 0 10px 0;
   line-height: 1.15;
-  text-shadow: 0 0 12px rgba(225, 11, 11, 0.45);
+  text-shadow: 0 0 20px rgba(225, 11, 11, 0.4);
 }
 
-.vault-screen .find-data-subtitle {
+.find-data-subtitle {
   color: #888;
-  font-size: clamp(9px, 0.8vw, 12px);
+  font-size: clamp(13px, 1.1vw, 16px);
   letter-spacing: 0.04em;
-  margin: 0 0 clamp(6px, 0.8vw, 12px) 0;
+  margin: 0;
 }
 
 /* Search Box Form */
-.vault-screen .search-form {
-  margin: 0 auto;
-  max-width: 440px;
+.search-form {
+  margin: 0 auto clamp(20px, 3vh, 30px) auto;
+  max-width: 580px;
   width: 100%;
 }
 
-.vault-screen .search-input-group {
+.search-input-group {
   position: relative;
   display: flex;
   align-items: center;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.92);
   border: 1px solid rgba(225, 11, 11, 0.45);
   border-radius: 999px;
-  padding: clamp(2px, 0.3vw, 5px) clamp(4px, 0.5vw, 8px) clamp(2px, 0.3vw, 5px) clamp(10px, 1vw, 16px);
-  box-shadow: 0 0 18px rgba(225, 11, 11, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.8);
-  height: clamp(28px, 2.5vw, 38px);
+  padding: 6px 8px 6px 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(225, 11, 11, 0.15);
+  height: clamp(44px, 4.5vw, 52px);
   box-sizing: border-box;
   transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
-.vault-screen .search-input-group:focus-within {
+.search-input-group:focus-within {
   border-color: #ff2222;
-  box-shadow: 0 0 25px rgba(225, 11, 11, 0.5), inset 0 0 12px rgba(225, 11, 11, 0.15);
+  box-shadow: 0 0 28px rgba(225, 11, 11, 0.45), inset 0 0 14px rgba(225, 11, 11, 0.15);
 }
 
-.vault-screen .search-icon {
+.search-icon {
   color: #777;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  margin-right: 8px;
+  margin-right: 10px;
 }
 
-.vault-screen .search-input {
+.search-input {
   flex: 1;
   background: transparent;
   border: none;
   color: #fff;
   font-family: inherit;
-  font-size: clamp(10px, 0.82vw, 13px);
+  font-size: clamp(13px, 1vw, 15px);
   letter-spacing: 0.02em;
   outline: none;
   min-width: 0;
 }
 
-.vault-screen .search-input::placeholder {
+.search-input::placeholder {
   color: #555;
 }
 
-.vault-screen .clear-search-btn {
+.clear-search-btn {
   background: none;
   border: none;
   color: #777;
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
-  padding: 0 6px;
+  padding: 0 8px;
   line-height: 1;
   transition: color 140ms ease;
 }
 
-.vault-screen .clear-search-btn:hover {
+.clear-search-btn:hover {
   color: #fff;
 }
 
-.vault-screen .search-submit-btn {
+.search-submit-btn {
   background: #e10b0b;
   color: #fff;
   border: none;
-  padding: 0 clamp(10px, 1.2vw, 18px);
+  padding: 0 clamp(16px, 1.8vw, 24px);
   height: 100%;
   border-radius: 999px;
   font-family: inherit;
-  font-size: clamp(9px, 0.75vw, 11px);
+  font-size: clamp(10px, 0.85vw, 12px);
   font-weight: 700;
   letter-spacing: 0.12em;
   cursor: pointer;
   flex-shrink: 0;
-  transition: opacity 160ms ease, transform 160ms ease;
+  transition: opacity 160ms ease, transform 160ms ease, box-shadow 160ms ease;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.vault-screen .search-submit-btn:hover {
-  opacity: 0.92;
+.search-submit-btn:hover {
+  opacity: 0.95;
   transform: scale(1.02);
+  box-shadow: 0 0 16px rgba(225, 11, 11, 0.6);
+}
+
+.search-submit-btn:active {
+  transform: scale(0.98);
 }
 
 /* Quick Registry Query Chips */
